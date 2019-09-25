@@ -3,7 +3,7 @@ from wtforms import StringField,PasswordField,SubmitField,BooleanField,SubmitFie
 from wtforms.validators import Required,Email
 from wtforms import ValidationError
 
-class PitchForm(FlaskForm):
+class BlogForm(FlaskForm):
     title = StringField('Title',validators=[Required()])
     description = TextAreaField("Tell us about your pitch",validators=[Required()])
     category = RadioField('Label', choices=[ ('pickup','pickup'), ('interview','interview'),('promotion','promotion'),('product','product')],validators=[Required()])
