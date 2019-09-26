@@ -18,7 +18,7 @@ class User(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255))
     email = db.Column(db.String(255),unique = True,index = True)
-    blog = db.relationship('Pitch', backref='user', lazy='dynamic')
+    blog = db.relationship('Blog', backref='user', lazy='dynamic')
     role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())

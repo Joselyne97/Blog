@@ -18,7 +18,7 @@
         </div>
       {% endfor %}
       <!-- Login form -->
-      {{wtf.quick_form(login_form)}}
+      {{wtf.quick_form(login_form)}} <br>
       <p> Don't have an account? click here to<a href="{{url_for('auth.register')}}"><button type="submit" class="btn btn-success">Sign up </button></a></p>
      </div>
      

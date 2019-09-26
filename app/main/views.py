@@ -20,15 +20,15 @@ def index():
 
     title = 'Home - Welcome to our Blogging-app Website Online'
 
-    life = Blog.query.filter_by(category = "life")
-    music = Blog.query.filter_by(category = "music")
-    emotion = Blog.query.filter_by(category = "emotion")
-    inspiration = Blog.query.filter_by(category = "inspiration")
+    # life = Blog.query.filter_by(category = "life")
+    # music = Blog.query.filter_by(category = "music")
+    # emotion = Blog.query.filter_by(category = "emotion")
+    # inspiration = Blog.query.filter_by(category = "inspiration")
     
     # upvotes = Upvote.get_all_upvotes(blog_id=Blog.id)
 
 
-    return render_template('category.html', title = title, blog = blog, life = life, music = music, emotion = emotion, inspiration = inspiration)
+    return render_template('home.html', title = title, blog = blog)
 
 @main.route('/blogs/new/', methods = ['GET', 'POST'])
 @login_required
@@ -39,9 +39,9 @@ def new_blog():
        description = form.description.data
        title = form.title.data
        user_id = current_user
-       category = form.category.data
+    #    category = form.category.data
        print(current_user._get_current_object().id)
-       new_blog = Blog(user_id = current_user._get_current_object().id, title = title, description=description, category=category)
+       new_blog = Blog(user_id = current_user._get_current_object().id, title = title, description=description)
        db.session.add(new_blog)
        db.session.commit()
        return redirect(url_for('main.index'))
@@ -55,7 +55,7 @@ def new_comment(blog_id):
     if form.validate_on_submit():
         description = form.description.data
 
-        new_comment = Comment(description = description, user_id = current_user._get_current_object().id, pitch_id = pitch_id)
+        new_comment = Comment(description = description, user_id = current_user._get_current_object().id, blog_id = blog_id)
         db.session.add(new_comment)
         db.session.commit()
 

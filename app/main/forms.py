@@ -1,13 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField,BooleanField,SubmitField,TextAreaField,RadioField
+from wtforms import StringField,PasswordField,SubmitField,BooleanField,SubmitField,TextAreaField
 from wtforms.validators import Required,Email
 from wtforms import ValidationError
 
 class BlogForm(FlaskForm):
     title = StringField('Title',validators=[Required()])
-    description = TextAreaField("Tell us about your pitch",validators=[Required()])
-    category = RadioField('Label', choices=[ ('pickup','pickup'), ('interview','interview'),('promotion','promotion'),('product','product')],validators=[Required()])
-    submit = SubmitField('Post the pitch')
+    description = TextAreaField("What do you have for us today?",validators=[Required()])
+    # category = RadioField('Label', choices=[ ('pickup','pickup'), ('interview','interview'),('promotion','promotion'),('product','product')],validators=[Required()])
+    submit = SubmitField('Post your blog')
 
 class UpdateProfile(FlaskForm):
     bio = TextAreaField('Tell us about you.',validators = [Required()])
