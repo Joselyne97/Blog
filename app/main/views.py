@@ -1,9 +1,9 @@
 import markdown2
 from flask import render_template,request,redirect,url_for,abort, flash
 from . import main
-from .forms import BlogForm, CommentForm, UpvoteForm, UpdateProfile
+from .forms import BlogForm, CommentForm, UpdateProfile
 from .. import db, photos
-from ..models import Blog, User,Comment,Upvote,Downvote
+from ..models import Blog, User,Comment
 from flask_login import login_required, current_user
 
 
@@ -25,7 +25,7 @@ def index():
     emotion = Blog.query.filter_by(category = "emotion")
     inspiration = Blog.query.filter_by(category = "inspiration")
     
-    upvotes = Upvote.get_all_upvotes(blog_id=Blog.id)
+    # upvotes = Upvote.get_all_upvotes(blog_id=Blog.id)
 
 
     return render_template('category.html', title = title, blog = blog, life = life, music = music, emotion = emotion, inspiration = inspiration)
@@ -99,37 +99,37 @@ def update_profile(uname):
 
 
 
-@main.route('/blog/upvote/<int:blog_id>/upvote', methods = ['GET', 'POST'])
-@login_required
-def upvote(blog_id):
-    blog = Blog.query.get(blog_id)
-    user = current_user
-    blog_upvotes = Upvote.query.filter_by(blog_id= blog_id)
+# @main.route('/blog/upvote/<int:blog_id>/upvote', methods = ['GET', 'POST'])
+# @login_required
+# def upvote(blog_id):
+#     blog = Blog.query.get(blog_id)
+#     user = current_user
+#     blog_upvotes = Upvote.query.filter_by(blog_id= blog_id)
     
-    if Upvote.query.filter(Upvote.user_id==user.id,Upvote.blog_id==blog_id).first():
-        return  redirect(url_for('main.index'))
+#     if Upvote.query.filter(Upvote.user_id==user.id,Upvote.blog_id==blog_id).first():
+#         return  redirect(url_for('main.index'))
 
 
-    new_upvote = Upvote(blog_id=blog_id, user = current_user)
-    new_upvote.save_upvotes()
-    return redirect(url_for('main.index'))
+#     new_upvote = Upvote(blog_id=blog_id, user = current_user)
+#     new_upvote.save_upvotes()
+#     return redirect(url_for('main.index'))
 
 
 
-@main.route('/blog/downvote/<int:blog_id>/downvote', methods = ['GET', 'POST'])
-@login_required
-def downvote(blog_id):
-    blog = Blog.query.get(blog_id)
-    user = current_user
-    blog_downvotes = Downvote.query.filter_by(blog_id= blog_id)
+# @main.route('/blog/downvote/<int:blog_id>/downvote', methods = ['GET', 'POST'])
+# @login_required
+# def downvote(blog_id):
+#     blog = Blog.query.get(blog_id)
+#     user = current_user
+#     blog_downvotes = Downvote.query.filter_by(blog_id= blog_id)
     
-    if Downvote.query.filter(Downvote.user_id==user.id,Downvote.blog_id==blog_id).first():
-        return  redirect(url_for('main.index'))
+#     if Downvote.query.filter(Downvote.user_id==user.id,Downvote.blog_id==blog_id).first():
+#         return  redirect(url_for('main.index'))
 
 
-    new_downvote = Downvote(blog_id=blog_id, user = current_user)
-    new_downvote.save_downvotes()
-    return redirect(url_for('main.index'))
+#     new_downvote = Downvote(blog_id=blog_id, user = current_user)
+#     new_downvote.save_downvotes()
+#     return redirect(url_for('main.index'))
 
 
 

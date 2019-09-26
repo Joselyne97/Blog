@@ -14,8 +14,6 @@
 				</p>
 				
 				<a href="{{url_for('main.new_comment',pitch_id = category.id)}}" class="btn btn-primary" style="font-size: 20px;"> comment</a>
-				<a href="{{url_for('main.upvote',pitch_id = category.id)}}" class= "btn btn-primary btn-sm" style="font-size: 20px;">Like <span>{{category.upvotes.count()}}</span></a>
-				<a href="{{url_for('main.downvote',pitch_id = category.id)}}" class= "btn btn-danger btn-sm" style="font-size: 20px;">Dislike <span>{{category.downvotes.count()}}</span></a>
 
 				</div>
 			</div>
