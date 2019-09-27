@@ -42,7 +42,7 @@
      </div> 
   </div>
 
-  <div class="row">
+  <div class="thumbnail text-center">
       <h2>My blogs</h2>
 	
 		{% for blog in description %}
@@ -58,8 +58,7 @@
 				
 				
                     <a href="{{url_for('main.new_comment',blog_id = blog.id)}}" class="btn btn-primary" style="font-size: 20px;"> comment</a>
-                    <!-- <a href="{{url_for('main.upvote',blog_id = blog.id)}}" class= "btn btn-primary btn-sm" style="font-size: 20px;">Like <span>{{blog.upvotes.count()}}</span></a>
-                    <a href="{{url_for('main.downvote',blog_id = blog.id)}}" class= "btn btn-danger btn-sm" style="font-size: 20px;">Dislike <span>{{blog.downvotes.count()}}</span></a> -->
+                    <a href="{{url_for('main.UpdateBlog',blog_id = blog.id)}}" class="btn btn-success" style="margin:10px;">Edit</a>     
 
 				</div>
 			</div>

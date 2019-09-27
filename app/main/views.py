@@ -1,11 +1,11 @@
 import markdown2
 from flask import render_template,request,redirect,url_for,abort, flash
 from . import main
-from .forms import BlogForm, CommentForm, UpdateProfile
+from .forms import BlogForm, CommentForm, UpdateProfile,UpdateBlogForm
 from .. import db, photos
 from ..models import Blog, User,Comment
 from flask_login import login_required, current_user
-
+from ..requests import getQuotes
 
 
 # Views
@@ -16,8 +16,9 @@ def index():
     View root page function that returns the index page and its data
     '''
 
-    blog= Blog.query.filter_by().first()
-
+    blog= Blog.query.all()
+    # form = BlogForm()
+    quotes=getQuotes()
     title = 'Home - Welcome to our Blogging-app Website Online'
 
     # life = Blog.query.filter_by(category = "life")
@@ -28,7 +29,7 @@ def index():
     # upvotes = Upvote.get_all_upvotes(blog_id=Blog.id)
 
 
-    return render_template('home.html', title = title, blog = blog)
+    return render_template('index.html', title = title, blog = blog,quotes=quotes )
 
 @main.route('/blogs/new/', methods = ['GET', 'POST'])
 @login_required
@@ -96,6 +97,26 @@ def update_profile(uname):
         return redirect(url_for('.profile',uname=user.username))
 
     return render_template('profile/update.html',form =form)
+
+
+@main.route('/profile/update/<int:blog_id>',methods = ['GET','POST'])
+@login_required
+def UpdateBlog(blog_id):
+    user = Blog.query.filter_by(id=blog_id).first()
+    if user is None:
+        abort(404)
+    user = current_user
+    form = UpdateBlogForm()
+
+    if form.validate_on_submit():
+        user.description = form.description.data
+        user.title = form.title.data
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('.profile',uname=user.username))
+    return render_template('profile/edit.html',form = form, user = user )
+
 
 
 

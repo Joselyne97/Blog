@@ -1,4 +1,9 @@
 {% extends 'base.html'%} 
+{% import 'bootstrap/wtf.html' as wtf %}
+{% import 'macros.html' as macro %}
+{% block navbar %}
+{% include 'navbar.html'%}
+{% endblock %}
 
 {% block styles%}
     {{ super() }}
@@ -12,14 +17,31 @@
         <div class="row">
             <div class="col-md-12 welcome">
                 {% if current_user.is_authenticated%}
-                <h1 style="align-items: center; color:deepskyblue; padding-top: 100px; margin-left: 200px;">Welcome to the online blogging-website application!</h1><br><br>
-                <h4 style="margin-left: 150px; margin-right: 200px">Here is the application that allows you to create and share your opinions and other users can read and comment on them wisely!</h4><br>
-                    <h4 style="margin-left: 150px; margin-right: 200px">You have only to click here to <a id="start" href="{{url_for('auth.login')}}"><button type="submit" class="btn btn-success">Sign In</button></a></h4><br><br>
-                    <h4 style="margin-left: 150px; margin-right: 200px">To see all the Blogs that others have postes, you only have to click here <a id="start" href="{{url_for('home.index')}}"><button type="submit" class="btn btn-success">view all Blogs</button></a> and you can submit your own quote and other users will comment on it and you can see the Blogs that others have posted and you can leave the comments.
-                    </h4>
+                <h1 style="align-items: center; color:deepskyblue; padding-top: 100px; margin-left: 200px;font-size: 40px;">Welcome to the online blogging-website application!</h1><br><br>
+                <h4 style="font-size: 40px;margin-left: 150px; margin-right: 200px;">Here is the application that allows you to create and share your opinions and other users can read and comment on them wisely!</h4><br>
                 {% endif %}
             </div>
         </div>
+
+        
+        <div class="thumbnail text-center">
+        
+            <div class="card">
+            <div  class="card-body">
+            <p class="card-text" style="font-size: 30px;">{{ quotes.quote }}</p>
+            <cite>{{ quotes.author }}</cite>
+          </div>
     </div>
+</div>
+
+    <h1 style="color:blue;text-align: center"><u>Blog list</u></h1>
+      <br>
+    <div class="thumbnail text-center" style="font-family: Great Vibes;font-size: 50px;">
+        {{ macro.displayBlog(blog) }}
+    </div>
+
+    
+    </div>
+
 </div>
 {% endblock %}

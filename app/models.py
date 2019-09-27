@@ -13,6 +13,13 @@ class PhotoProfile(db.Model):
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
 
+class Quotes:
+    def __init__(self,id,author,quote,permalink):
+        self.id=id
+        self.author=author
+        self.quote=quote
+        self.link="http://quotes.stormconsultancy.co.uk/quotes/31"
+
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer,primary_key = True)
@@ -59,7 +66,7 @@ class Blog(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
     description = db.Column(db.String(), index = True)
     title = db.Column(db.String())
-    category = db.Column(db.String(255), nullable=False)
+    # category = db.Column(db.String(255), nullable=False)
     comments = db.relationship('Comment',backref='blog',lazy='dynamic')
     # upvotes = db.relationship('Upvote', backref = 'blog', lazy = 'dynamic')
     # downvotes = db.relationship('Downvote', backref = 'blog', lazy = 'dynamic')
