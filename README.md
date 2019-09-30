@@ -1,6 +1,6 @@
 ## Project name:
 
-Pitch app
+Blog website app
 
 ## Author:
 
@@ -15,11 +15,15 @@ Joselyne MPAYIMANA
 
 ## Project description:
 
- We were required to Create an application that will allow users to use one minute wisely to impress others by saying something something meaningful. The users will submit their one minute pitches and other users will vote on them and leave comments to give their feedback on them.
+ We were required to Create an application that will allow users to post a blog, The user will submit their blogs and be able to edit them and delete them so other users will leave comments to give their feedback on them and the users will be able to subscribe so that they can get update of new blogs.
 
  ## Technology used:
 
  Python3.6
+ Bootstrap
+ Flask Framework
+ Postgressql
+ Heroku
 
  ## Link of the website is:
 

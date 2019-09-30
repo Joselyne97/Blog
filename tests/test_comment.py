@@ -1,12 +1,12 @@
 import unittest
-from app.models import Pitch, User, Comment
+from app.models import Blog, User, Comment
 from app import db
 
-class TestPitch(unittest.TestCase):
+class TestBlog(unittest.TestCase):
 
     def setUp(self):
-        self.new_pitch = Pitch(pitch_content = "pitch one", pitch_category='Business')
-        self.new_comment = Comment(comment_content = "One comment", pitch=self.new_pitch)
+        self.new_blog = Blog(description = "comment")
+        self.new_comment = Comment(description = "banana", blog=self.new_blog)
     
     def tearDown(self):
         db.session.delete(self)
@@ -18,5 +18,5 @@ class TestPitch(unittest.TestCase):
 
 
     def test_check_instance_variables(self):
-        self.assertEquals(self.new_comment.comment_content,"One comment")
-        self.assertEquals(self.new_comment.pitch,self.new_pitch, 'pitch one')
+        self.assertEquals(self.new_comment.description,"banana")
+        self.assertEquals(self.new_comment.blog,self.new_blog, 'comment')

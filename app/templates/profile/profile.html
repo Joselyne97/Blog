@@ -1,4 +1,9 @@
 {% extends 'bootstrap/base.html' %}
+{% block navbar %}
+{% include 'navbar.html'%}
+{% endblock %}
+
+
 {% block styles%}
     {{ super() }}
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -58,8 +63,8 @@
 				
 				
                     <a href="{{url_for('main.new_comment',blog_id = blog.id)}}" class="btn btn-primary" style="font-size: 20px;"> comment</a>
-                    <a href="{{url_for('main.UpdateBlog',blog_id = blog.id)}}" class="btn btn-success" style="margin:10px;">Edit</a>     
-
+                    <a href="{{url_for('main.UpdateBlog',blog_id = blog.id)}}" class="btn btn-success" style="margin:10px;font-size: 20px;">Edit</a>     
+                    <a href="{{url_for('main.delete_blog',blog_id = blog.id)}}" class= "btn btn-danger btn-sm" style="margin:10px;font-size: 20px;">Delete the blog</a> 
 				</div>
 			</div>
 		</div>

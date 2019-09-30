@@ -118,15 +118,15 @@ def delete_blog(blog_id):
 @main.route('/profile/update/<int:blog_id>',methods = ['GET','POST'])
 @login_required
 def UpdateBlog(blog_id):
-    user = Blog.query.filter_by(id=blog_id).first()
-    if user is None:
+    owner = Blog.query.filter_by(id=blog_id).first()
+    if owner is None:
         abort(404)
     user = current_user
     form = UpdateBlogForm()
 
     if form.validate_on_submit():
-        user.description = form.description.data
-        user.title = form.title.data
+        owner.description = form.description.data
+        owner.title = form.title.data
         db.session.add(user)
         db.session.commit()
 

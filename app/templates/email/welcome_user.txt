@@ -1,3 +1,3 @@
 Hello {{user.username}}
-Welcome to Blogging-website
-We have just seen you have signed up for our application and want to welcome you to the family. Please enjoy the Blogging that will be posted and you can comment to all your favourite blogs.
+Welcome to Blog websity
+We have just seen you have signed up for our application and want to welcome you to the family. Please enjoy the blogs that will be posted and you can comment to all your favourite blogs.
