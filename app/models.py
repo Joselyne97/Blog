@@ -19,6 +19,11 @@ class Quotes:
         self.author=author
         self.quote=quote
         self.link="http://quotes.stormconsultancy.co.uk/quotes/31"
+    
+    def hello(self):
+        self.s = requests.Session()
+        self.s.headers.update()
+        return True
 
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
@@ -66,11 +71,9 @@ class Blog(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
     description = db.Column(db.String(), index = True)
     title = db.Column(db.String())
-    # category = db.Column(db.String(255), nullable=False)
+    
     comments = db.relationship('Comment',backref='blog',lazy='dynamic')
-    # upvotes = db.relationship('Upvote', backref = 'blog', lazy = 'dynamic')
-    # downvotes = db.relationship('Downvote', backref = 'blog', lazy = 'dynamic')
-
+   
     @classmethod
     def get_blogs(cls, id):
         blogs = Blog.query.order_by(blog_id=id).desc().all()
@@ -79,9 +82,20 @@ class Blog(db.Model):
     def __repr__(self):
         return f'Blog {self.description}'
 
+    def delete_blog(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def update_blog(self):
+        db.session.add(self)
+        db.session.commit()
+
     def save_comment(self):
         db.session.add(self)
         db.session.commit()
+
+    def __repr__(self):
+        return f'Blog {self.description}'
 
 class Comment(db.Model):
     __tablename__='comments'
@@ -95,68 +109,14 @@ class Comment(db.Model):
     def __repr__(self):
         return f"Comment : id: {self.id} comment: {self.description}"
 
-# class Upvote(db.Model):
-#     __tablename__ = 'upvotes'
+class Subscribe(db.Model):
+    __tablename__ = 'subscribers'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    email = db.Column(db.String(100), unique=True)
 
-#     id = db.Column(db.Integer,primary_key=True)
-#     upvote = db.Column(db.Integer,default=1)
-#     blog_id = db.Column(db.Integer,db.ForeignKey('blogs.id'))
-#     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-
-#     def save_upvotes(self):
-#         db.session.add(self)
-#         db.session.commit()
-
-
-#     def add_upvotes(cls,id):
-#         upvote_blog = Upvote(user = current_user, blog_id=id)
-#         upvote_blog.save_upvotes()
-
-    
-#     @classmethod
-#     def get_upvotes(cls,id):
-#         upvote = Upvote.query.filter_by(blog_id=id).all()
-#         return upvote
-
-#     @classmethod
-#     def get_all_upvotes(cls,blog_id):
-#         upvotes = Upvote.query.order_by('id').all()
-#         return upvotes
-#     def __repr__(self):
-#         return f'{self.user_id}:{self.blog_id}'
-
-
-# class Downvote(db.Model):
-#     __tablename__ = 'downvotes'
-
-#     id = db.Column(db.Integer,primary_key=True)
-#     downvote = db.Column(db.Integer,default=1)
-#     blog_id = db.Column(db.Integer,db.ForeignKey('blogs.id'))
-#     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-
-#     def save_downvotes(self):
-#         db.session.add(self)
-#         db.session.commit()
-
-
-#     def add_downvotes(cls,id):
-#         downvote_blog = Downvote(user = current_user, blog_id=id)
-#         downvote_blog.save_downvotes()
-
-    
-#     @classmethod
-#     def get_downvotes(cls,id):
-#         downvote = Downvote.query.filter_by(blog_id=id).all()
-#         return downvote
-
-#     @classmethod
-#     def get_all_downvotes(cls,blog_id):
-#         downvote = Downvote.query.order_by('id').all()
-#         return downvote
-
-#     def __repr__(self):
-#         return f'{self.user_id}:{self.blog_id}'
-
+    def __repr__(self):
+        return f'User {self.name}'
 
 class Role(db.Model):
     __tablename__ = 'roles'

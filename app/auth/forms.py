@@ -27,3 +27,15 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('That username is taken')
 
 
+class SubscribeForm(FlaskForm):
+    usename = StringField('Enter your username', validators=[Required()])
+    useremail = StringField('Enter your Email Address', validators=[Required(), Email()])
+    submit = SubmitField('Subscribe')
+
+    def validate_usename(self, data_field):
+        if User.query.filter_by(username=data_field.data).first():
+            raise ValidationError('That username is taken')
+
+    def validate_useremail(self, data_field):
+        if User.query.filter_by(email=data_field.data).first():
+            raise ValidationError('There is an account with that email')

@@ -99,6 +99,22 @@ def update_profile(uname):
     return render_template('profile/update.html',form =form)
 
 
+@main.route('/profile/delete/<int:blog_id>',methods = ['GET','POST'])
+@login_required
+def delete_blog(blog_id):
+    blog=Blog.query.filter_by(id = blog_id).first()
+    comments=blog.comments
+    if blog.comments:
+       for comment in comments:
+           db.session.delete(comment)
+           db.session.commit()
+
+    user = current_user
+    db.session.delete(blog)
+    db.session.commit()
+    return redirect(url_for('.profile', uname=user.username))
+    return render_template('profile/profile.html', user=user) 
+
 @main.route('/profile/update/<int:blog_id>',methods = ['GET','POST'])
 @login_required
 def UpdateBlog(blog_id):
@@ -120,39 +136,3 @@ def UpdateBlog(blog_id):
 
 
 
-# @main.route('/blog/upvote/<int:blog_id>/upvote', methods = ['GET', 'POST'])
-# @login_required
-# def upvote(blog_id):
-#     blog = Blog.query.get(blog_id)
-#     user = current_user
-#     blog_upvotes = Upvote.query.filter_by(blog_id= blog_id)
-    
-#     if Upvote.query.filter(Upvote.user_id==user.id,Upvote.blog_id==blog_id).first():
-#         return  redirect(url_for('main.index'))
-
-
-#     new_upvote = Upvote(blog_id=blog_id, user = current_user)
-#     new_upvote.save_upvotes()
-#     return redirect(url_for('main.index'))
-
-
-
-# @main.route('/blog/downvote/<int:blog_id>/downvote', methods = ['GET', 'POST'])
-# @login_required
-# def downvote(blog_id):
-#     blog = Blog.query.get(blog_id)
-#     user = current_user
-#     blog_downvotes = Downvote.query.filter_by(blog_id= blog_id)
-    
-#     if Downvote.query.filter(Downvote.user_id==user.id,Downvote.blog_id==blog_id).first():
-#         return  redirect(url_for('main.index'))
-
-
-#     new_downvote = Downvote(blog_id=blog_id, user = current_user)
-#     new_downvote.save_downvotes()
-#     return redirect(url_for('main.index'))
-
-
-
-
-    

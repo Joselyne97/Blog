@@ -1,10 +1,9 @@
 from . import auth
 from flask import render_template,redirect,url_for, flash,request
-from ..models import User
 from .. import db
 from flask_login import login_user,logout_user,login_required
-from ..models import User
-from .forms import LoginForm,RegistrationForm
+from ..models import User,Subscribe
+from .forms import LoginForm,RegistrationForm,SubscribeForm
 from ..email import mail_message
 
 @auth.route('/login',methods=['GET','POST'])
@@ -42,3 +41,19 @@ def register():
         title = "New Account"
     return render_template('auth/register.html',registration_form = form)
 
+
+@auth.route('/subscribe', methods=["GET", "POST"])
+def subscribe():
+    subscribingform = SubscribeForm()
+    if subscribingform.validate_on_submit():
+        subscribers = Subscribe(name=subscribingform.usename.data, email=subscribingform.useremail.data)
+
+        db.session.add(subscribers)
+        db.session.commit()
+
+        mail_message("Welcome to Blog website...",
+                     "email/welcome_user", subscribers.email, subscribers=subscribers)
+
+        return redirect(url_for('main.index'))
+        title = "Subscribe to get new update on our website"
+    return render_template('auth/subscribe.html', subscribe_form=subscribingform)
