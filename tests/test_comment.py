@@ -10,7 +10,7 @@ class TestBlog(unittest.TestCase):
     
     def tearDown(self):
         db.session.delete(self)
-        User.query.commit()
+        User.query.delete()
         
 
     def test_instance(self):
@@ -20,3 +20,13 @@ class TestBlog(unittest.TestCase):
     def test_check_instance_variables(self):
         self.assertEquals(self.new_comment.description,"banana")
         self.assertEquals(self.new_comment.blog,self.new_blog, 'comment')
+
+    def test_save_comment(self):
+        self.new_comment.save_comment()
+        self.assertTrue(len(Comment.query.all())>0)
+
+    def test_get_comment_by_id(self):
+
+        self.new_comment.save_comment()
+        got_comments = Comment.get_comments(12345)
+        self.assertTrue(len(got_comments) == 1)

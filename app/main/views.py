@@ -40,7 +40,7 @@ def new_blog():
        description = form.description.data
        title = form.title.data
        user_id = current_user
-    #    category = form.category.data
+   
        print(current_user._get_current_object().id)
        new_blog = Blog(user_id = current_user._get_current_object().id, title = title, description=description)
        db.session.add(new_blog)
@@ -65,6 +65,22 @@ def new_comment(blog_id):
 
     all_comments = Comment.query.filter_by(blog_id = blog_id).all()
     return render_template('comment.html', form = form, comment = all_comments, blog = blog )
+
+@main.route('/profile/dltcmts/<int:blog_id>',methods = ['GET','POST'])
+@login_required
+def delete_Comment(blog_id):
+    blog=Blog.query.filter_by(id = blog_id).first()
+
+    if blog.comments:
+       for comment in comments:
+           db.session.delete(comment)
+           db.session.commit()
+
+    user = current_user
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for('.profile', uname=user.username))
+    return render_template('profile/profile.html', user=user) 
 
 
 @main.route('/user/<uname>')
