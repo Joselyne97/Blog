@@ -19,11 +19,11 @@ Joselyne MPAYIMANA
 
  ## Technology used:
 
- Python3.6
- Bootstrap
- Flask Framework
- Postgressql
- Heroku
+ 1. Python3.6
+ 2. Bootstrap
+ 3. Flask Framework
+ 4. Postgressql
+ 5. Heroku
 
  ## Link of the website is:
 
