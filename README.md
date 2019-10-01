@@ -27,7 +27,7 @@ Joselyne MPAYIMANA
 
  ## Link of the website is:
 
- https://bloggingwebsite.herokuapp.com/
+
 
  ## Copyright and license information:
 
